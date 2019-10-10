@@ -31,3 +31,17 @@
     transform: rotate(360deg);
   }
 }
+
+.infoBox {
+  color: white;
+  background-color: black;
+}
+.boxDate {
+  font-size: 1.6rem;
+}
+.boxTitle {
+  font-size: 2rem;
+}
+.boxDesc: {
+  font-size: 1.6rem;
+}
