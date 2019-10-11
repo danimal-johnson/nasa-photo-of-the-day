@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./App.css";
 
-import Image from "./components/Image";
 import InfoBox from "./components/InfoBox";
+import PageBackground from "./components/PageBackground";
+import DatePicker from "./components/DatePicker";
+// import Image from "./components/Image";
 
-const API_KEY = "DEMO_KEY";
+const API_KEY = "KiOYB2gJaAbZk3A2Bs20bzUIdzsxXSLyDawCgmdc";
 
 const getToday = () => {
   let today = new Date();
@@ -15,12 +17,12 @@ const getToday = () => {
   console.log (dateString);
   return dateString;
 }
+const maxDate = getToday();
 
 function App() {
 
   const [imageData, setImageData] = useState({});
   const [date, setDate] = useState(getToday());
-  let callCounter = 0;
 
 /**** ImageData ****
     date,
@@ -36,34 +38,30 @@ function App() {
     axios
       .get(`https://api.nasa.gov/planetary/apod?date=${date}&api_key=${API_KEY}`)
       .then( response => {
-
+        console.log(response);
         setImageData(response.data);
-        console.log ("Use Effect Counter: " + ++callCounter);
       })
       .catch( error => {
         console.log ("Houston, we have a problem...");
       });
     }, [date]);
-  const submit_date = e => { 
+
+    const submit_date = e => { 
     e.preventDefault();
     return setDate(e.target.value);
   }
+
   return (
     <div className="App">
-      <h1>The NASA Image of the Day</h1>
-      <form action="">
-        <input type="date" id="submit_date" name="theDate" value={date}
-          min="2019-01-01" max="2019-10-10" onChange={submit_date}
-        />
-        { /*<button type="button" onClick={setDate(
-          document.getElementById("submit_date").value ? 
-        document.getElementById("submit_date").value : date)}>Update</button> */ }
-      </form>
+      <h1 className="title">The NASA Image of the Day</h1>
+      
+      <DatePicker date={date} submit_date={submit_date} today={maxDate}/>
       <InfoBox data={imageData} />
-      <Image url={imageData.hdurl} alt={imageData.title} width="100%" />
+      <PageBackground data={imageData} />
     </div>
   );
 }
 
 export default App;
 
+// <Image url={imageData.hdurl} alt={imageData.title} width="100%" />
