@@ -31,7 +31,6 @@ const StyledInfo = styled.div`
 
 
 function InfoBox(props) {
-    console.log (props.data);
     return (
         <StyledInfo className = "infoBox">
             <div>

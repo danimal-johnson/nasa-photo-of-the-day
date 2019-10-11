@@ -1,5 +1,4 @@
 import React from "react";
-// import styled from "styled-components";
 import styled from "styled-components"
 
 const DatePick = styled.div`
@@ -10,7 +9,7 @@ const DatePick = styled.div`
         border-radius: 4px;
         margin-bottom: 1rem;
     }
-    
+
     [type="date"]::-webkit-inner-spin-button {
         display: none; 
   }
@@ -19,7 +18,6 @@ const DatePick = styled.div`
 
 
 function DatePicker (props) {
-    console.log (props);
     
   return (
     <DatePick>

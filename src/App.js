@@ -5,7 +5,6 @@ import "./App.css";
 import InfoBox from "./components/InfoBox";
 import PageBackground from "./components/PageBackground";
 import DatePicker from "./components/DatePicker";
-// import Image from "./components/Image";
 
 const API_KEY = "KiOYB2gJaAbZk3A2Bs20bzUIdzsxXSLyDawCgmdc";
 
@@ -14,7 +13,6 @@ const getToday = () => {
   let dateString = today.getFullYear() + '-' + 
                  ('0' + (today.getMonth() + 1)).slice(-2) +
                  '-' + ('0' + today.getDate()).slice(-2);
-  console.log (dateString);
   return dateString;
 }
 const maxDate = getToday();
@@ -24,7 +22,7 @@ function App() {
   const [imageData, setImageData] = useState({});
   const [date, setDate] = useState(getToday());
 
-/**** ImageData ****
+/***** Schema *****
     date,
     explanation,
     hdurl,
@@ -32,17 +30,16 @@ function App() {
     serviceVersion,
     title,
     url,
- ******************/
+ *****************/
 
   useEffect(() => {
     axios
       .get(`https://api.nasa.gov/planetary/apod?date=${date}&api_key=${API_KEY}`)
       .then( response => {
-        console.log(response);
         setImageData(response.data);
       })
       .catch( error => {
-        console.log ("Houston, we have a problem...");
+        console.error("Houston, we have a problem...");
       });
     }, [date]);
 
@@ -63,5 +60,3 @@ function App() {
 }
 
 export default App;
-
-// <Image url={imageData.hdurl} alt={imageData.title} width="100%" />

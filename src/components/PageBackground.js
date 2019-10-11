@@ -1,16 +1,5 @@
 import React from "react";
-//import styled from "styled-components";
-/*
-const ImageWrapper = styled.div`
-    
-    backgroundPosition: 'center',
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat'
-    color: '#00FF00'
-    height: '800px'
-    width: '800px'
-;`
-*/
+
 function PageBackground(props) {
 
     if (props.data.media_type === "video") {
@@ -22,20 +11,7 @@ function PageBackground(props) {
             </div>
         )
     } else {
-        // let theWholeThing = document.querySelector(".App");
-        // theWholeThing.backgroundColor = "red";
-
-            //  <div backgroundImage={props.data.hdurl} alt={props.data.title} width="800px"
-            //  style={{border: 5px solid hotpink}}>
-            // {{ backgroundImage: `url(${props.data.url})` }}>
-            // <ImageWrapper style=
-            // {{ background: `#783478` }}
-            // <img src={props.data.url} alt={props.data.title} width="100%" zIndex="-1"/>
-            // > <div><h1>WTF?!</h1></div>
-            // <ImageWrapper style={{ backgroundImage: `url(${props.data.url})` }}>
-            // </ImageWrapper>
-
-            return (
+        return (
             <img src={props.data.url} alt={props.data.title} width="100%"/>
         )
     }
