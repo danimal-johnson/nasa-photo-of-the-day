@@ -2,44 +2,59 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./App.css";
 
-import Image from "./components/Image";
 import InfoBox from "./components/InfoBox";
+import PageBackground from "./components/PageBackground";
+import DatePicker from "./components/DatePicker";
 
-const API_KEY = "DEMO_KEY";
+const API_KEY = "KiOYB2gJaAbZk3A2Bs20bzUIdzsxXSLyDawCgmdc";
+
+const getToday = () => {
+  let today = new Date();
+  let dateString = today.getFullYear() + '-' + 
+                 ('0' + (today.getMonth() + 1)).slice(-2) +
+                 '-' + ('0' + today.getDate()).slice(-2);
+  return dateString;
+}
+const maxDate = getToday();
 
 function App() {
 
   const [imageData, setImageData] = useState({});
-  let callCounter = 0;
+  const [date, setDate] = useState(getToday());
 
-/*  const setImageData = (newData) => {
-    imageData.date            = newData.date;
-    imageData.explanation     = newData.explanation;
-    imageData.hdurl           = newData.hdurl;
-    imageData.mediaType       = newData.media_type;
-    imageData.serviceVersion  = newData.service_version;
-    imageData.title           = newData.title;
-    imageData.url             = newData.url; 
-  } */
+/***** Schema *****
+    date,
+    explanation,
+    hdurl,
+    mediaType,
+    serviceVersion,
+    title,
+    url,
+ *****************/
 
   useEffect(() => {
     axios
-      .get(`https://api.nasa.gov/planetary/apod?api_key=${API_KEY}`)
+      .get(`https://api.nasa.gov/planetary/apod?date=${date}&api_key=${API_KEY}`)
       .then( response => {
-
         setImageData(response.data);
-        console.log ("Use Effect Counter: " + ++callCounter);
       })
       .catch( error => {
-        console.log ("Houston, we have a problem...");
+        console.error("Houston, we have a problem...");
       });
-    }, []);
-  
+    }, [date]);
+
+    const submit_date = e => { 
+    e.preventDefault();
+    return setDate(e.target.value);
+  }
+
   return (
     <div className="App">
-      <h1>The NASA Image of the Day</h1>
+      <h1 className="title">The NASA Image of the Day</h1>
+      
+      <DatePicker date={date} submit_date={submit_date} today={maxDate}/>
       <InfoBox data={imageData} />
-      <Image url={imageData.hdurl} alt={imageData.title} />
+      <PageBackground data={imageData} />
     </div>
   );
 }
