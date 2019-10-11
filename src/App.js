@@ -7,24 +7,34 @@ import InfoBox from "./components/InfoBox";
 
 const API_KEY = "DEMO_KEY";
 
+const getToday = () => {
+  let today = new Date();
+  let dateString = today.getFullYear() + '-' + 
+                 ('0' + (today.getMonth() + 1)).slice(-2) +
+                 '-' + ('0' + today.getDate()).slice(-2);
+  console.log (dateString);
+  return dateString;
+}
+
 function App() {
 
   const [imageData, setImageData] = useState({});
+  const [date, setDate] = useState(getToday());
   let callCounter = 0;
 
-/*  const setImageData = (newData) => {
-    imageData.date            = newData.date;
-    imageData.explanation     = newData.explanation;
-    imageData.hdurl           = newData.hdurl;
-    imageData.mediaType       = newData.media_type;
-    imageData.serviceVersion  = newData.service_version;
-    imageData.title           = newData.title;
-    imageData.url             = newData.url; 
-  } */
+/**** ImageData ****
+    date,
+    explanation,
+    hdurl,
+    mediaType,
+    serviceVersion,
+    title,
+    url,
+ ******************/
 
   useEffect(() => {
     axios
-      .get(`https://api.nasa.gov/planetary/apod?api_key=${API_KEY}`)
+      .get(`https://api.nasa.gov/planetary/apod?date=${date}&api_key=${API_KEY}`)
       .then( response => {
 
         setImageData(response.data);
@@ -33,15 +43,27 @@ function App() {
       .catch( error => {
         console.log ("Houston, we have a problem...");
       });
-    }, []);
-  
+    }, [date]);
+  const submit_date = e => { 
+    e.preventDefault();
+    return setDate(e.target.value);
+  }
   return (
     <div className="App">
       <h1>The NASA Image of the Day</h1>
+      <form action="">
+        <input type="date" id="submit_date" name="theDate" value={date}
+          min="2019-01-01" max="2019-10-10" onChange={submit_date}
+        />
+        { /*<button type="button" onClick={setDate(
+          document.getElementById("submit_date").value ? 
+        document.getElementById("submit_date").value : date)}>Update</button> */ }
+      </form>
       <InfoBox data={imageData} />
-      <Image url={imageData.hdurl} alt={imageData.title} />
+      <Image url={imageData.hdurl} alt={imageData.title} width="100%" />
     </div>
   );
 }
 
 export default App;
+
